@@ -140,6 +140,68 @@
   .stat .num{ font-family:'Fraunces', serif; font-size:2rem; color: var(--blue-dark); font-weight:600; }
   .stat .label{ color: var(--ink-soft); font-size:0.92rem; }
 
+  /* -------- CURRICULUM -------- */
+  .curriculum-feature{
+    background: var(--white);
+    border: 1px solid rgba(43,58,68,0.1);
+    border-radius: 6px;
+    padding: 40px;
+    margin-bottom: 28px;
+  }
+  .curriculum-feature .badge{
+    display:inline-block;
+    background: var(--rose-dark);
+    color: var(--white);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  .curriculum-feature .week-num{
+    color: var(--blue-dark);
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+  }
+  .curriculum-feature h3{ font-size: 1.5rem; margin-bottom: 10px; }
+  .curriculum-feature .week-date{ color: var(--ink-soft); font-size: 0.9rem; margin-bottom: 18px; }
+  .curriculum-feature p{ color: var(--ink-soft); }
+  .curriculum-feature ul{ margin: 0; padding-left: 20px; color: var(--ink-soft); }
+  .curriculum-feature ul li{ margin-bottom: 6px; }
+
+  .curriculum-rail{
+    display:flex;
+    gap: 14px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scroll-behavior: smooth;
+  }
+  .curriculum-rail::-webkit-scrollbar{ height: 6px; }
+  .curriculum-rail::-webkit-scrollbar-thumb{ background: var(--rose); border-radius: 3px; }
+
+  .week-pill{
+    flex: 0 0 auto;
+    background: var(--white);
+    border: 1.5px solid rgba(43,58,68,0.15);
+    border-radius: 5px;
+    padding: 12px 18px;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Work Sans', sans-serif;
+    min-width: 150px;
+    position: relative;
+  }
+  .week-pill .pill-week{ font-size: 0.78rem; color: var(--blue-dark); font-weight: 600; margin-bottom: 4px; }
+  .week-pill .pill-title{ font-size: 0.92rem; color: var(--ink); font-weight: 500; }
+  .week-pill.active{ border-color: var(--rose-dark); background: var(--rose-light); }
+  .week-pill .pill-current{
+    position:absolute; top:-9px; right: 10px;
+    background: var(--blue-dark); color: var(--white);
+    font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 10px;
+    letter-spacing: 0.02em;
+  }
+
   /* -------- COACHES -------- */
   .coach-list{ display:grid; grid-template-columns: 1fr 1fr; gap: 40px; }
   .coach-card{
@@ -237,6 +299,7 @@
     </a>
     <ul class="navlinks">
       <li><a href="#about">About</a></li>
+      <li><a href="#curriculum">Curriculum</a></li>
       <li><a href="#coaches">Coaches</a></li>
       <li><a href="#events">Events</a></li>
       <li><a href="#gallery">Gallery</a></li>
@@ -299,22 +362,37 @@
   </div>
 </section>
 
-<section class="band-alt" id="coaches">
+<section class="band-alt" id="curriculum">
+  <div class="wrap">
+    <h2 class="section-title">Weekly curriculum</h2>
+    <p style="color:var(--ink-soft); max-width:560px; margin-bottom:36px;">Here's what we're covering, week by week. The card below automatically shows the current week — scroll the row to preview any other week.</p>
+
+    <div class="curriculum-feature" id="curriculum-feature">
+      <!-- Filled in by JavaScript at the bottom of the page -->
+    </div>
+
+    <div class="curriculum-rail" id="curriculum-rail">
+      <!-- Week pills filled in by JavaScript -->
+    </div>
+  </div>
+</section>
+
+<section id="coaches">
   <div class="wrap">
     <h2 class="section-title">Meet your coaches</h2>
     <p style="color:var(--ink-soft); max-width:560px; margin-bottom:40px;">Two nationally ranked women's chess players bring real tournament experience and years of tutoring to every session.</p>
     <div class="coach-list">
       <div class="coach-card">
         <div class="coach-avatar"></div>
-        <h3>Coach Summer</h3>
-        <div class="coach-role">Coach · Nationally Ranked Female Chess Player</div>
+        <h3>Coach Name One</h3>
+        <div class="coach-role">Head Coach · Nationally Ranked Player</div>
         <p>A sentence or two about her chess background, ranking, and what she loves about teaching kids.</p>
         <div class="edit-note">Replace this card with your coach's real name, photo, and bio.</div>
       </div>
       <div class="coach-card">
         <div class="coach-avatar"></div>
         <h3>Coach Name Two</h3>
-        <div class="coach-role">Coach Madison · Nationally Ranked Female Chess Player</div>
+        <div class="coach-role">Assistant Coach · Nationally Ranked Player</div>
         <p>A sentence or two about her chess background, ranking, and what she loves about teaching kids.</p>
         <div class="edit-note">Replace this card with your coach's real name, photo, and bio.</div>
       </div>
@@ -400,6 +478,120 @@
     <div class="fine">Replace the contact email above with your real one. &copy; 2026 The Great Chess Piece.</div>
   </div>
 </footer>
+
+<script>
+  // ---- WEEKLY CURRICULUM ----
+  // To edit: change the text below, or add/remove week objects.
+  // "date" is the Monday each week's lesson starts — the site uses it to
+  // figure out which week is "current" automatically, no manual updates needed.
+  const curriculum = [
+    {
+      date: "2026-10-04",
+      title: "Meet the Board",
+      description: "Students learn the chessboard layout, how to set up all 32 pieces correctly, and basic chess notation.",
+      objectives: ["Set up a board from memory", "Name each piece and its starting square", "Read simple square coordinates (e.g. e4)"]
+    },
+    {
+      date: "2026-10-11",
+      title: "How the Pieces Move",
+      description: "A hands-on walkthrough of how each piece moves and captures, with lots of practice on an empty board.",
+      objectives: ["Move every piece correctly", "Understand legal vs. illegal moves", "Practice simple captures"]
+    },
+    {
+      date: "2026-10-18",
+      title: "Check and Checkmate",
+      description: "Introducing the goal of the game: what check and checkmate actually mean, and how to spot them.",
+      objectives: ["Recognize when a king is in check", "Deliver a basic checkmate", "Avoid moving into check"]
+    },
+    {
+      date: "2026-10-25",
+      title: "Special Moves",
+      description: "Covering the game's trickier rules — castling, en passant, and pawn promotion.",
+      objectives: ["Castle kingside and queenside", "Explain en passant", "Promote a pawn correctly"]
+    },
+    {
+      date: "2026-11-01",
+      title: "Opening Principles",
+      description: "Simple, memorable rules for the first few moves of any game: control the center, develop pieces, keep the king safe.",
+      objectives: ["Play a solid opening move", "Explain why the center matters", "Avoid early queen moves"]
+    },
+    {
+      date: "2026-11-08",
+      title: "Tactics I: Forks & Pins",
+      description: "Our first tactics session — spotting moves that attack two things at once.",
+      objectives: ["Identify a fork", "Identify a pin", "Find a simple tactic in a practice position"]
+    },
+    {
+      date: "2026-11-15",
+      title: "Tactics II: Skewers & Discoveries",
+      description: "Building on last week with two more tactical patterns players use to win material.",
+      objectives: ["Identify a skewer", "Identify a discovered attack", "Combine tactics in a mini puzzle set"]
+    },
+    {
+      date: "2026-11-22",
+      title: "Endgame Basics",
+      description: "What happens when most pieces are off the board — king and pawn endgames and the idea of opposition.",
+      objectives: ["Explain the idea of opposition", "Promote a lone pawn with king support", "Recognize a drawn king-and-pawn ending"]
+    }
+  ];
+
+  function formatWeekDate(dateStr){
+    const d = new Date(dateStr + "T00:00:00");
+    return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  }
+
+  // Figure out which week is "current": the latest week whose date has
+  // already arrived. Before week 1 starts, it defaults to week 1.
+  function getCurrentWeekIndex(){
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    let idx = 0;
+    for (let i = 0; i < curriculum.length; i++){
+      const weekDate = new Date(curriculum[i].date + "T00:00:00");
+      if (weekDate <= today) idx = i;
+    }
+    return idx;
+  }
+
+  const currentWeekIndex = getCurrentWeekIndex();
+
+  function renderFeature(index){
+    const week = curriculum[index];
+    const isCurrent = index === currentWeekIndex;
+    document.getElementById('curriculum-feature').innerHTML = `
+      ${isCurrent ? '<span class="badge">This week</span><br>' : ''}
+      <div class="week-num">Week ${index + 1}</div>
+      <h3>${week.title}</h3>
+      <div class="week-date">Starts ${formatWeekDate(week.date)}</div>
+      <p>${week.description}</p>
+      <ul>${week.objectives.map(o => `<li>${o}</li>`).join('')}</ul>
+    `;
+    document.querySelectorAll('.week-pill').forEach((pill, i) => {
+      pill.classList.toggle('active', i === index);
+    });
+  }
+
+  function renderRail(){
+    const rail = document.getElementById('curriculum-rail');
+    rail.innerHTML = curriculum.map((week, i) => `
+      <button class="week-pill" data-index="${i}">
+        ${i === currentWeekIndex ? '<span class="pill-current">Current</span>' : ''}
+        <div class="pill-week">Week ${i + 1}</div>
+        <div class="pill-title">${week.title}</div>
+      </button>
+    `).join('');
+    rail.querySelectorAll('.week-pill').forEach(pill => {
+      pill.addEventListener('click', () => renderFeature(parseInt(pill.dataset.index, 10)));
+    });
+  }
+
+  renderRail();
+  renderFeature(currentWeekIndex);
+
+  // Scroll the current week's pill into view on load
+  const activePill = document.querySelector('.week-pill.active');
+  if (activePill) activePill.scrollIntoView({ behavior: 'instant', inline: 'center', block: 'nearest' });
+</script>
 
 </body>
 </html>
