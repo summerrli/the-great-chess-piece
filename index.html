@@ -4,349 +4,368 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Great Chess Piece</title>
+<meta name="description" content="Free chess lessons for kids every Friday, 4–5 PM, at the Spuyten Duyvil Library in the Bronx. Taught by two nationally ranked players.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Chess piece symbols only (tiny download) -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols+2&text=%E2%99%9A%E2%99%9B%E2%99%9C%E2%99%9D%E2%99%9E%E2%99%9F%EF%B8%8E&display=block" rel="stylesheet">
 <style>
   :root{
-    --rose:        #dab5c1;
-    --rose-dark:   #a66c81;
-    --rose-light:  #f3e5ea;
-    --blue:        #7caec5;
-    --blue-dark:   #4c7b94;
-    --blue-light:  #e6eff3;
-    --ink:         #2b3a44;
-    --ink-soft:    #5a6a72;
-    --paper:       #fbf8f7;
-    --white:       #ffffff;
+    --paper:      #faf7f6;
+    --ink:        #22313b;
+    --ink-soft:   #56656e;
+    --line:       rgba(34,49,59,0.14);
+    --rose:       #dab5c1;
+    --rose-deep:  #95566e;
+    --rose-wash:  #f5e8ed;
+    --blue:       #7caec5;
+    --blue-deep:  #3f6f88;
+    --blue-wash:  #e6f0f4;
+    --white:      #ffffff;
+
+    --display: 'Fraunces', Georgia, serif;
+    --body:    'Work Sans', system-ui, -apple-system, sans-serif;
+    --pieces:  'Noto Sans Symbols 2', 'Segoe UI Symbol', 'DejaVu Sans', sans-serif;
+
+    --ease: cubic-bezier(.65,0,.35,1);
   }
 
-  *{ box-sizing: border-box; }
-  html{ scroll-behavior: smooth; }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; scroll-padding-top:76px; }
   body{
-    margin:0;
-    font-family:'Work Sans', sans-serif;
-    color: var(--ink);
-    background: var(--paper);
-    line-height:1.6;
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--body); font-size:1.0625rem; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
   }
   h1,h2,h3{
-    font-family:'Fraunces', serif;
-    font-weight: 600;
-    margin: 0 0 0.4em 0;
-    line-height:1.15;
+    font-family:var(--display); font-weight:600; margin:0;
+    font-variation-settings:"SOFT" 100, "WONK" 1;
+    letter-spacing:-0.015em; text-wrap:balance;
   }
-  p{ margin: 0 0 1em 0; }
-  a{ color: var(--blue-dark); }
+  p{ margin:0 0 1em; }
+  a{ color:var(--blue-deep); }
   img{ max-width:100%; display:block; }
-  .wrap{ max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+  :focus-visible{ outline:3px solid var(--blue); outline-offset:3px; border-radius:6px; }
 
-  /* -------- NAV -------- */
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 28px; }
+  section{ padding:96px 0; }
+  .section-head{ max-width:600px; margin-bottom:44px; }
+  .section-head h2{ font-size:clamp(2rem, 3.6vw, 2.75rem); line-height:1.08; margin-bottom:14px; }
+  .section-head p{ color:var(--ink-soft); margin:0; }
+  .band-rose{ background:var(--rose-wash); }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding:14px 26px; border-radius:10px;
+    font-family:var(--body); font-size:1rem; font-weight:600; line-height:1.2;
+    text-decoration:none; cursor:pointer; border:1.5px solid transparent;
+    transition:background-color .2s, color .2s, border-color .2s;
+  }
+  .btn-primary{ background:var(--rose-deep); color:var(--white); }
+  .btn-primary:hover{ background:var(--ink); }
+  .btn-ghost{ background:transparent; color:var(--ink); border-color:var(--ink); }
+  .btn-ghost:hover{ background:var(--ink); color:var(--white); }
+
+  /* ---------- Nav ---------- */
   nav{
-    position: sticky; top:0; z-index: 50;
-    background: rgba(251,248,247,0.92);
-    backdrop-filter: blur(6px);
-    border-bottom: 1px solid rgba(43,58,68,0.08);
+    position:sticky; top:0; z-index:50;
+    background:rgba(250,247,246,0.9); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
   }
-  nav .wrap{
-    display:flex; align-items:center; justify-content:space-between;
-    padding-top:14px; padding-bottom:14px;
-  }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; gap:24px; height:68px; }
   .brand{
-    display:flex; align-items:center; gap:10px;
-    font-family:'Fraunces', serif; font-weight:600; font-size:1.15rem;
-    color: var(--ink); text-decoration:none;
+    display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink);
+    font-family:var(--display); font-variation-settings:"SOFT" 100, "WONK" 1;
+    font-weight:600; font-size:1.2rem;
   }
-  .brand .pawn{ width:22px; height:22px; }
-  .navlinks{ display:flex; gap: 28px; list-style:none; margin:0; padding:0; }
-  .navlinks a{
-    text-decoration:none; color: var(--ink-soft); font-size:0.95rem; font-weight:500;
-  }
-  .navlinks a:hover{ color: var(--blue-dark); }
-  .navcta{
-    background: var(--ink); color:var(--white); padding:9px 18px; border-radius:3px;
-    font-size:0.9rem; font-weight:600; text-decoration:none;
-  }
-  .navcta:hover{ background: var(--blue-dark); }
-  .menu-toggle{ display:none; background:none; border:none; cursor:pointer; }
+  .brand svg{ width:24px; height:24px; }
+  .navlinks{ display:flex; gap:30px; list-style:none; margin:0; padding:0; }
+  .navlinks a{ color:var(--ink-soft); text-decoration:none; font-size:0.95rem; font-weight:500; }
+  .navlinks a:hover{ color:var(--ink); }
+  nav .btn{ padding:10px 18px; font-size:0.92rem; }
 
-  /* -------- HERO -------- */
-  .hero{
-    position:relative;
-    overflow:hidden;
-    padding: 90px 0 70px;
+  /* ---------- Hero ---------- */
+  .hero{ padding:72px 0 96px; overflow:hidden; }
+  .hero .wrap{
+    display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr);
+    gap:64px; align-items:center;
   }
-  .checker{
-    position:absolute; top:-40px; right:-60px;
-    width: 420px; height:420px;
-    display:grid; grid-template-columns: repeat(8,1fr); grid-template-rows: repeat(8,1fr);
-    opacity:0.55; transform: rotate(-8deg);
-    z-index:0;
+  .hero h1{
+    font-size:clamp(2.75rem, 6vw, 4.6rem); line-height:1.02; letter-spacing:-0.03em;
+    margin-bottom:24px;
   }
-  .checker div:nth-child(odd){ background: var(--rose); }
-  .checker div:nth-child(even){ background: transparent; }
-  .checker div{ }
-  /* proper checkerboard pattern via row parity using nth-child of row groups */
-  .checker div:nth-child(16n+1),.checker div:nth-child(16n+3),.checker div:nth-child(16n+5),.checker div:nth-child(16n+7),
-  .checker div:nth-child(16n+10),.checker div:nth-child(16n+12),.checker div:nth-child(16n+14),.checker div:nth-child(16n+16){
-    background: var(--blue);
-  }
-  .checker div:nth-child(16n+2),.checker div:nth-child(16n+4),.checker div:nth-child(16n+6),.checker div:nth-child(16n+8),
-  .checker div:nth-child(16n+9),.checker div:nth-child(16n+11),.checker div:nth-child(16n+13),.checker div:nth-child(16n+15){
-    background: var(--rose);
-  }
+  .hero .lede{ font-size:1.2rem; color:var(--ink-soft); max-width:30em; margin-bottom:32px; }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
 
-  .hero-inner{ position:relative; z-index:1; max-width: 620px; }
-  .kicker{ color: var(--blue-dark); font-weight:600; font-size:1rem; margin-bottom: 14px; }
-  .hero h1{ font-size: clamp(2.4rem, 5vw, 3.6rem); color: var(--ink); }
-  .hero .lede{ font-size:1.15rem; color: var(--ink-soft); max-width: 540px; }
-  .hero-actions{ display:flex; gap:16px; margin-top: 28px; flex-wrap:wrap; }
-  .btn-primary{
-    background: var(--rose-dark); color:var(--white); padding:14px 26px; border-radius:3px;
-    text-decoration:none; font-weight:600; display:inline-block;
-    box-shadow: 0 4px 0 rgba(43,58,68,0.12);
+  .board-wrap{ width:100%; max-width:460px; justify-self:end; }
+  .board{
+    position:relative; aspect-ratio:1/1; width:100%;
+    border-radius:14px; overflow:hidden;
+    box-shadow:0 0 0 10px var(--white), 0 0 0 11px var(--line), 0 30px 60px -30px rgba(34,49,59,0.45);
+    container-type:inline-size;
   }
-  .btn-primary:hover{ background: var(--ink); }
-  .btn-secondary{
-    border: 1.5px solid var(--ink); color: var(--ink); padding:13px 24px; border-radius:3px;
-    text-decoration:none; font-weight:600; display:inline-block;
+  .squares{ position:absolute; inset:0; display:grid; grid-template-columns:repeat(8,1fr); grid-template-rows:repeat(8,1fr); }
+  .sq{ position:relative; background:var(--rose-wash); transition:background-color .35s; }
+  .sq.dark{ background:var(--blue); }
+  .sq.last{ background:#f1d58a; }
+  .sq.dark.last{ background:#d9bd6c; }
+  .sq.mate::after{
+    content:""; position:absolute; inset:0;
+    background:radial-gradient(circle, rgba(149,86,110,0.85) 0%, rgba(149,86,110,0.35) 55%, transparent 72%);
+    animation:matePulse 1.4s ease-in-out infinite;
   }
-  .btn-secondary:hover{ border-color: var(--blue-dark); color: var(--blue-dark); }
+  @keyframes matePulse{ 0%,100%{ opacity:.65; } 50%{ opacity:1; } }
+  .coord{
+    position:absolute; font-size:2.1cqw; font-weight:600; line-height:1;
+    color:var(--blue-deep); pointer-events:none;
+  }
+  .sq.dark .coord{ color:var(--rose-wash); }
+  .coord.rank{ top:4%; left:5%; }
+  .coord.file{ bottom:5%; right:6%; }
 
-  /* -------- SECTION SHELL -------- */
-  section{ padding: 80px 0; }
-  .section-title{ font-size: clamp(1.7rem, 3vw, 2.3rem); margin-bottom: 18px; }
-  .band-alt{ background: var(--rose-light); }
-  .band-dark{ background: var(--ink); color: var(--white); }
-  .band-dark h2, .band-dark h3{ color: var(--white); }
-  .band-dark .ink-soft-inv{ color: rgba(255,255,255,0.72); }
-
-  /* -------- ABOUT -------- */
-  .about-grid{
-    display:grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items:center;
-  }
-  .about-copy p{ color: var(--ink-soft); font-size:1.05rem; }
-  .knight-frame{
-    background: var(--blue-light);
-    border: 1px solid rgba(76,123,148,0.25);
-    border-radius: 4px;
-    padding: 34px;
+  .pieces{ position:absolute; inset:0; transition:opacity .45s; }
+  .pieces.fading{ opacity:0; }
+  .piece{
+    position:absolute; top:0; left:0; width:12.5%; height:12.5%;
     display:flex; align-items:center; justify-content:center;
+    font-family:var(--pieces); font-size:9.4cqw; line-height:1;
+    transform:translate(calc(var(--x) * 100%), calc(var(--y) * 100%));
+    transition:transform .62s var(--ease), opacity .3s;
+    user-select:none;
   }
-  .knight-frame svg{ width: 140px; height:140px; }
+  .piece.white{ color:var(--white); -webkit-text-stroke:1.3px var(--ink); paint-order:stroke fill; filter:drop-shadow(0 2px 1px rgba(34,49,59,.25)); }
+  .piece.black{ color:var(--ink); filter:drop-shadow(0 2px 1px rgba(34,49,59,.2)); }
+  .piece.moving{ z-index:2; }
+  .piece.captured{ opacity:0; }
 
-  .stat-row{ display:flex; gap: 40px; margin-top: 28px; flex-wrap:wrap; }
-  .stat{ }
-  .stat .num{ font-family:'Fraunces', serif; font-size:2rem; color: var(--blue-dark); font-weight:600; }
-  .stat .label{ color: var(--ink-soft); font-size:0.92rem; }
+  .board-caption{
+    display:flex; align-items:baseline; gap:14px; margin:28px 0 0; min-height:3.4em;
+    transition:opacity .25s;
+  }
+  .board-caption.swapping{ opacity:0; }
+  .board-caption .move{
+    flex:0 0 auto; font-family:var(--display); font-variation-settings:"SOFT" 100, "WONK" 1;
+    font-weight:600; font-size:1.35rem; color:var(--rose-deep); min-width:5.5ch;
+  }
+  .board-caption .note{ color:var(--ink-soft); font-size:0.98rem; line-height:1.45; }
 
-  /* -------- CURRICULUM -------- */
-  .curriculum-feature{
-    background: var(--white);
-    border: 1px solid rgba(43,58,68,0.1);
-    border-radius: 6px;
-    padding: 40px;
-    margin-bottom: 28px;
-  }
-  .curriculum-feature .badge{
-    display:inline-block;
-    background: var(--rose-dark);
-    color: var(--white);
-    font-size: 0.78rem;
-    font-weight: 600;
-    padding: 5px 12px;
-    border-radius: 20px;
-    margin-bottom: 16px;
-  }
-  .curriculum-feature .week-num{
-    color: var(--blue-dark);
-    font-weight: 600;
-    font-size: 0.95rem;
-    margin-bottom: 4px;
-  }
-  .curriculum-feature h3{ font-size: 1.5rem; margin-bottom: 10px; }
-  .curriculum-feature .week-date{ color: var(--ink-soft); font-size: 0.9rem; margin-bottom: 18px; }
-  .curriculum-feature p{ color: var(--ink-soft); }
-  .curriculum-feature ul{ margin: 0; padding-left: 20px; color: var(--ink-soft); }
-  .curriculum-feature ul li{ margin-bottom: 6px; }
+  /* ---------- About ---------- */
+  .about-grid{ display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,0.9fr); gap:72px; align-items:start; }
+  .about-copy p{ color:var(--ink-soft); font-size:1.1rem; max-width:34em; }
+  .about-copy p strong{ color:var(--ink); font-weight:600; }
 
-  .curriculum-rail{
-    display:flex;
-    gap: 14px;
-    overflow-x: auto;
-    padding-top: 12px;
-    padding-bottom: 10px;
-    scroll-behavior: smooth;
+  /* Styled after a tournament scoresheet */
+  .scoresheet{
+    background:var(--white); border:1.5px solid var(--ink); border-radius:4px;
+    padding:6px 22px 10px; margin:0;
+    box-shadow:8px 8px 0 var(--rose);
   }
-  .curriculum-rail::-webkit-scrollbar{ height: 6px; }
-  .curriculum-rail::-webkit-scrollbar-thumb{ background: var(--rose); border-radius: 3px; }
+  .scoresheet-title{
+    font-family:var(--display); font-variation-settings:"SOFT" 100, "WONK" 1;
+    font-weight:600; font-size:1.15rem; padding:14px 0 12px;
+    border-bottom:3px double var(--ink); margin:0;
+  }
+  .scoresheet dl{ margin:0; }
+  .scoresheet .row{
+    display:grid; grid-template-columns:76px 1fr; gap:16px;
+    padding:13px 0; border-bottom:1px solid var(--line);
+  }
+  .scoresheet .row:last-child{ border-bottom:none; }
+  .scoresheet dt{ color:var(--blue-deep); font-weight:600; font-size:0.92rem; padding-top:2px; }
+  .scoresheet dd{ margin:0; }
 
-  .week-pill{
-    flex: 0 0 auto;
-    background: var(--white);
-    border: 1.5px solid rgba(43,58,68,0.15);
-    border-radius: 5px;
-    padding: 12px 18px;
-    cursor: pointer;
-    text-align: left;
-    font-family: 'Work Sans', sans-serif;
-    min-width: 150px;
-    position: relative;
+  /* ---------- Curriculum ---------- */
+  .curriculum-grid{ display:grid; grid-template-columns:300px minmax(0,1fr); gap:32px; align-items:start; }
+  .week-list{
+    list-style:none; margin:0; padding:6px; max-height:520px; overflow-y:auto;
+    background:var(--white); border:1px solid var(--line); border-radius:12px;
+    scrollbar-width:thin; scrollbar-color:var(--rose) transparent;
   }
-  .week-pill .pill-week{ font-size: 0.78rem; color: var(--blue-dark); font-weight: 600; margin-bottom: 4px; }
-  .week-pill .pill-title{ font-size: 0.92rem; color: var(--ink); font-weight: 500; }
-  .week-pill.active{ border-color: var(--rose-dark); background: var(--rose-light); }
-  .week-pill .pill-current{
-    position:absolute; top:-9px; right: 10px;
-    background: var(--blue-dark); color: var(--white);
-    font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 10px;
-    letter-spacing: 0.02em;
+  .week{
+    width:100%; display:grid; grid-template-columns:1fr auto; column-gap:12px;
+    text-align:left; background:none; border:0; border-radius:8px; cursor:pointer;
+    padding:10px 12px; font-family:var(--body); color:var(--ink);
+    transition:background-color .2s;
   }
+  .week:hover{ background:var(--paper); }
+  .week .w-num{ font-size:0.78rem; font-weight:600; color:var(--blue-deep); }
+  .week .w-date{ font-size:0.78rem; color:var(--ink-soft); text-align:right; }
+  .week .w-title{ grid-column:1 / -1; font-size:0.95rem; font-weight:500; line-height:1.35; }
+  .week.is-past .w-title{ color:var(--ink-soft); }
+  .week.is-next .w-date{ color:var(--rose-deep); font-weight:600; }
+  .week.active{ background:var(--rose-wash); box-shadow:inset 3px 0 0 var(--rose-deep); }
 
-  /* -------- COACHES -------- */
-  .coach-list{ display:grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-  .coach-card{
-    background: var(--white); border:1px solid rgba(43,58,68,0.1);
-    padding: 30px; border-radius:4px;
+  .lesson{
+    background:var(--white); border:1px solid var(--line); border-radius:12px;
+    padding:44px 48px; min-height:100%;
   }
-  .coach-avatar{
-    width:64px; height:64px; border-radius:50%;
-    background: linear-gradient(135deg, var(--rose), var(--blue));
-    margin-bottom: 16px;
+  .lesson.swap{ animation:lessonIn .32s var(--ease); }
+  @keyframes lessonIn{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:none; } }
+  .lesson-meta{ display:flex; flex-wrap:wrap; align-items:center; gap:10px; color:var(--ink-soft); font-size:0.95rem; margin-bottom:12px; }
+  .pill{
+    display:inline-block; padding:3px 11px; border-radius:999px;
+    font-size:0.78rem; font-weight:600; line-height:1.5;
+    background:var(--blue-wash); color:var(--blue-deep);
+    font-family:var(--body); font-variation-settings:normal; font-style:normal; letter-spacing:0;
   }
-  .coach-card h3{ font-size:1.2rem; margin-bottom:2px; }
-  .coach-role{ color: var(--blue-dark); font-weight:600; font-size:0.9rem; margin-bottom:10px; }
-  .coach-card p{ color: var(--ink-soft); font-size:0.98rem; margin-bottom:0; }
-  .edit-note{
-    font-size:0.82rem; color: var(--ink-soft); font-style:italic; margin-top:8px;
+  .pill.rose{ background:var(--rose-deep); color:var(--white); }
+  .lesson h3{ font-size:clamp(1.6rem, 2.6vw, 2.1rem); line-height:1.12; margin-bottom:14px; }
+  .lesson > p{ color:var(--ink-soft); max-width:36em; margin-bottom:26px; }
+  .lesson h4{ font-size:0.95rem; font-weight:600; margin:0 0 12px; }
+  .goals{ list-style:none; margin:0; padding:0; display:grid; gap:10px; }
+  .goals li{ position:relative; padding-left:28px; }
+  .goals li::before{
+    content:""; position:absolute; left:0; top:0.42em; width:12px; height:12px;
+    background:linear-gradient(135deg, var(--blue) 50%, var(--rose) 50%); border-radius:2px;
   }
 
-  /* -------- EVENTS -------- */
-  .event-list{ list-style:none; margin:0; padding:0; }
+  /* ---------- Coaches ---------- */
+  .coach-list{ display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+  .coach{ background:var(--white); border:1px solid var(--line); border-radius:12px; padding:34px; }
+  .coach-top{ display:flex; align-items:center; gap:16px; margin-bottom:18px; }
+  .initials{
+    flex:0 0 auto; width:58px; height:58px; border-radius:10px;
+    display:grid; place-items:center;
+    font-family:var(--display); font-variation-settings:"SOFT" 100, "WONK" 1;
+    font-weight:600; font-size:1.3rem; color:var(--white);
+  }
+  .initials.rose{ background:var(--rose-deep); }
+  .initials.blue{ background:var(--blue-deep); }
+  .coach h3{ font-size:1.4rem; line-height:1.15; }
+  .coach-role{ color:var(--blue-deep); font-weight:600; font-size:0.9rem; }
+  .coach p{ color:var(--ink-soft); margin:0; font-size:1rem; }
+
+  /* ---------- Sessions ---------- */
+  .event-list{ list-style:none; margin:0; padding:0; border-top:1.5px solid var(--ink); }
   .event-list li{
-    display:grid; grid-template-columns: 110px 1fr; gap: 24px;
-    padding: 22px 0; border-bottom: 1px solid rgba(43,58,68,0.12);
-    align-items:start;
+    display:grid; grid-template-columns:150px 1fr; gap:24px; align-items:baseline;
+    padding:20px 0; border-bottom:1px solid var(--line);
   }
   .event-date{
-    font-family:'Fraunces', serif; font-weight:600; color: var(--rose-dark); font-size:1.05rem;
+    font-family:var(--display); font-variation-settings:"SOFT" 100, "WONK" 1;
+    font-weight:600; font-size:1.1rem; color:var(--rose-deep);
   }
-  .event-list h3{ font-size:1.05rem; margin-bottom:4px; }
-  .event-list p{ color: var(--ink-soft); margin-bottom:0; font-size:0.95rem; }
-  .event-list li.is-break .event-date{ color: var(--ink-soft); }
-  .event-list li.is-break h3{ color: var(--ink-soft); font-weight:500; font-style:italic; }
+  .event-list h3{ font-size:1.15rem; margin-bottom:2px; display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+  .event-list p{ color:var(--ink-soft); margin:0; font-size:0.95rem; }
+  .event-list li.is-break .event-date{ color:var(--ink-soft); }
+  .event-list li.is-break h3{ font-family:var(--body); font-variation-settings:normal; font-weight:400; font-size:1rem; color:var(--ink-soft); font-style:italic; letter-spacing:0; }
   .event-list li.is-hidden{ display:none; }
-  .event-tag{
-    display:inline-block; margin-left:8px; vertical-align:middle;
-    background: var(--blue-light); color: var(--blue-dark);
-    font-family:'Work Sans', sans-serif; font-size:0.72rem; font-weight:600;
-    padding:2px 9px; border-radius:10px;
-  }
-  .schedule-toggle{
-    margin-top: 26px; background:none; cursor:pointer;
-    font-family:'Work Sans', sans-serif; font-size:0.95rem;
-  }
+  .event-list li.reveal{ animation:lessonIn .35s var(--ease) both; }
+  .schedule-toggle{ margin-top:28px; }
   .schedule-toggle[hidden]{ display:none; }
 
-  /* -------- GALLERY -------- */
+  /* ---------- Gallery ---------- */
   .gallery-grid{
-    display:grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    display:grid; grid-template-columns:1.5fr 1fr; grid-template-rows:250px 250px; gap:16px;
   }
-  .gallery-item{
-    aspect-ratio: 4/3; border-radius:4px;
-    display:flex; align-items:center; justify-content:center;
-    color: var(--ink-soft); font-size:0.85rem; text-align:center; padding: 12px;
-    border: 1.5px dashed rgba(43,58,68,0.25);
-  }
-  .gallery-item:nth-child(6n+1){ background: var(--rose-light); }
-  .gallery-item:nth-child(6n+2){ background: var(--blue-light); }
-  .gallery-item:nth-child(6n+3){ background: #f0eae5; }
-  .gallery-item:nth-child(6n+4){ background: var(--blue-light); }
-  .gallery-item:nth-child(6n+5){ background: var(--rose-light); }
-  .gallery-item:nth-child(6n+6){ background: #f0eae5; }
-  .gallery-photo{
-    width:100%; aspect-ratio: 4/3; object-fit: cover;
-    border-radius:4px;
-  }
+  .gallery-grid img{ width:100%; height:100%; object-fit:cover; border-radius:12px; }
+  .gallery-grid img:first-child{ grid-row:span 2; }
 
-  /* -------- JOIN -------- */
-  .join-panel{
-    background: var(--blue-dark);
-    color: var(--white);
-    border-radius: 6px;
-    padding: 56px;
-    display:grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items:center;
+  /* ---------- Join ---------- */
+  .join{
+    position:relative; overflow:hidden;
+    background:var(--blue-deep); color:var(--white); border-radius:18px;
+    padding:84px 64px 64px; display:grid; grid-template-columns:minmax(0,1.2fr) auto; gap:40px; align-items:center;
   }
-  .join-panel h2{ color:var(--white); }
-  .join-panel p{ color: rgba(255,255,255,0.85); }
-  .form-embed{
-    background: rgba(255,255,255,0.08);
-    border: 1px dashed rgba(255,255,255,0.4);
-    border-radius: 4px;
-    padding: 34px;
-    text-align:center;
+  .join::before{ /* a strip of board squares along the top edge */
+    content:""; position:absolute; left:0; right:0; top:0; height:28px;
+    background:conic-gradient(var(--rose) 25%, transparent 0 50%, var(--rose) 0 75%, transparent 0) 0 0 / 28px 28px;
+    opacity:.85;
   }
-  .form-embed a.btn-primary{ background: var(--white); color: var(--blue-dark); box-shadow:none; }
-  .form-embed a.btn-primary:hover{ background: var(--rose-light); }
-  .form-embed small{ display:block; margin-top:14px; color: rgba(255,255,255,0.7); font-size:0.8rem; }
+  .join h2{ font-size:clamp(2rem, 3.6vw, 2.75rem); line-height:1.08; margin-bottom:14px; }
+  .join p{ color:rgba(255,255,255,0.85); margin:0; max-width:32em; }
+  .join-cta{ text-align:center; }
+  .join .btn-primary{ background:var(--white); color:var(--blue-deep); font-size:1.05rem; padding:16px 30px; }
+  .join .btn-primary:hover{ background:var(--rose-wash); }
+  .join small{ display:block; margin-top:12px; color:rgba(255,255,255,0.72); font-size:0.85rem; }
 
-  /* -------- FOOTER -------- */
-  footer{ background: var(--ink); color: rgba(255,255,255,0.75); padding: 50px 0 30px; }
-  .foot-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap: 30px; }
-  .foot-brand{ font-family:'Fraunces', serif; color:var(--white); font-size:1.1rem; font-weight:600; }
-  .foot-links{ list-style:none; padding:0; margin:0; display:flex; gap:20px; flex-wrap:wrap; }
-  .foot-links a{ color: rgba(255,255,255,0.75); text-decoration:none; font-size:0.9rem; }
-  .foot-links a:hover{ color: var(--rose); }
-  .fine{ margin-top: 26px; font-size:0.8rem; color: rgba(255,255,255,0.45); border-top:1px solid rgba(255,255,255,0.12); padding-top:20px; }
+  /* ---------- Footer ---------- */
+  footer{ background:var(--ink); color:rgba(255,255,255,0.75); padding:56px 0 32px; }
+  .foot-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:28px; }
+  .foot-brand{ font-family:var(--display); font-variation-settings:"SOFT" 100, "WONK" 1; color:var(--white); font-size:1.2rem; font-weight:600; }
+  .foot-grid p{ margin:8px 0 0; max-width:340px; font-size:0.92rem; }
+  .foot-links{ list-style:none; padding:0; margin:0; display:flex; gap:22px; flex-wrap:wrap; }
+  .foot-links a{ color:rgba(255,255,255,0.8); text-decoration:none; font-size:0.92rem; }
+  .foot-links a:hover{ color:var(--rose); }
+  .fine{ margin-top:30px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.12); font-size:0.8rem; color:rgba(255,255,255,0.5); }
 
-  @media (max-width: 820px){
+  /* ---------- Small screens ---------- */
+  @media (max-width: 900px){
     .navlinks{ display:none; }
-    .about-grid, .coach-list{ grid-template-columns: 1fr; }
-    .join-panel{ grid-template-columns: 1fr; padding: 34px; }
-    .gallery-grid{ grid-template-columns: repeat(2,1fr); }
-    .checker{ display:none; }
+    section{ padding:72px 0; }
+    .hero{ padding:40px 0 32px; }
+    .hero .wrap{ grid-template-columns:1fr; gap:48px; }
+    .board-wrap{ justify-self:center; max-width:400px; }
+    .about-grid{ grid-template-columns:1fr; gap:48px; }
+    .curriculum-grid{ grid-template-columns:1fr; gap:20px; }
+    .week-list{
+      display:flex; gap:6px; overflow-x:auto; overflow-y:hidden; max-height:none; order:2;
+    }
+    .week-list li{ flex:0 0 auto; }
+    .week{ width:176px; height:100%; }
+    .week.active{ box-shadow:inset 0 -3px 0 var(--rose-deep); }
+    .lesson{ padding:30px 26px; }
+    .coach-list{ grid-template-columns:1fr; }
+    .event-list li{ grid-template-columns:1fr; gap:4px; }
+    .gallery-grid{ grid-template-columns:1fr; grid-template-rows:none; }
+    .gallery-grid img{ aspect-ratio:4/3; height:auto; }
+    .gallery-grid img:first-child{ grid-row:auto; }
+    .join{ grid-template-columns:1fr; padding:64px 28px 40px; }
+    .join-cta{ text-align:left; }
+  }
+  @media (max-width: 420px){
+    .wrap{ padding:0 20px; }
+    nav .btn{ padding:9px 14px; }
+    .brand{ font-size:1.05rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *, *::before, *::after{ animation:none !important; transition:none !important; }
   }
 </style>
 </head>
 <body>
 
-<nav>
+<nav aria-label="Main">
   <div class="wrap">
     <a href="#top" class="brand">
-      <svg class="pawn" viewBox="0 0 24 24" fill="none"><path d="M12 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" fill="#a66c81"/><path d="M9 11h6l1.2 4.5H7.8L9 11Z" fill="#7caec5"/><path d="M6 21l1.5-4h9L18 21H6Z" fill="#2b3a44"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" fill="#95566e"/><path d="M9 11h6l1.2 4.5H7.8L9 11Z" fill="#7caec5"/><path d="M6 21l1.5-4h9L18 21H6Z" fill="#22313b"/></svg>
       The Great Chess Piece
     </a>
     <ul class="navlinks">
       <li><a href="#about">About</a></li>
       <li><a href="#curriculum">Curriculum</a></li>
       <li><a href="#coaches">Coaches</a></li>
-      <li><a href="#events">Events</a></li>
+      <li><a href="#events">Sessions</a></li>
       <li><a href="#gallery">Gallery</a></li>
     </ul>
-    <a href="#join" class="navcta">Join for free</a>
+    <a href="#join" class="btn btn-primary">Join for free</a>
   </div>
 </nav>
 
 <header class="hero" id="top">
-  <div class="checker">
-    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-  </div>
   <div class="wrap">
-    <div class="hero-inner">
-      <div class="kicker">A free program for young chess players</div>
+    <div>
       <h1>Every great mind starts with one move.</h1>
-      <p class="lede">The Great Chess Piece is a cost-free, hands-on chess program designed to inspire and challenge young minds — building strategic thinking one game at a time.</p>
+      <p class="lede">Free chess lessons for kids every Friday at the Spuyten Duyvil Library. Whether you've never played before or you already know your openings, come learn and play with us.</p>
       <div class="hero-actions">
-        <a href="#join" class="btn-primary">Join for free</a>
-        <a href="#about" class="btn-secondary">Learn more</a>
+        <a href="#join" class="btn btn-primary">Join for free</a>
+        <a href="#events" class="btn btn-ghost">See the schedule</a>
       </div>
+    </div>
+
+    <div class="board-wrap">
+      <div class="board" id="board" role="img" aria-label="A chessboard playing through the Scholar's Mate, a checkmate in four moves.">
+        <div class="squares" id="squares"></div>
+        <div class="pieces" id="pieces"></div>
+      </div>
+      <p class="board-caption" id="board-caption" aria-hidden="true">
+        <span class="move" id="cap-move"></span>
+        <span class="note" id="cap-note"></span>
+      </p>
     </div>
   </div>
 </header>
@@ -354,101 +373,106 @@
 <section id="about">
   <div class="wrap about-grid">
     <div class="about-copy">
-      <h2 class="section-title">A supportive, high-energy way to learn the game</h2>
-      <p>The Great Chess Piece is a cost-free, hands-on chess program designed to inspire and challenge young minds. Taught by two nationally ranked women's chess players with extensive tutoring experience, this program provides a supportive, high-energy environment for students to master the basics, build strategic thinking, and have an engaging introduction to the game.</p>
-      <div class="stat-row">
-        <div class="stat">
-          <div class="num">$0</div>
-          <div class="label">Cost to join</div>
-        </div>
-        <div class="stat">
-          <div class="num">2</div>
-          <div class="label">Nationally ranked coaches</div>
-        </div>
-        <div class="stat">
-          <div class="num">All</div>
-          <div class="label">Skill levels welcome</div>
-        </div>
+      <div class="section-head" style="margin-bottom:24px;">
+        <h2>Run by players, for kids</h2>
       </div>
+      <p>The Great Chess Piece is run by <strong>Madison Wu</strong> and <strong>Summer Li</strong>, two nationally ranked women's chess players who have spent years tutoring kids.</p>
+      <p>Beginners work with Madison on the basics: how the pieces move, how to checkmate, and how to play a full game. Kids who already play work with Summer on tactics, strategy, and real games.</p>
+      <p>We started this program to give more kids, and especially more girls, a seat at the board. It's free, and it always will be.</p>
     </div>
-    <div class="knight-frame">
-      <svg viewBox="0 0 100 100" fill="none">
-        <path d="M25 85h50l-4-10H29l-4 10Z" fill="#2b3a44"/>
-        <path d="M30 75c-2-20 4-28 4-40 0-14 12-22 24-20 10 2 16 12 12 22-3 8-10 10-14 18-3 6-2 14-2 20H30Z" fill="#7caec5"/>
-        <circle cx="52" cy="28" r="3.2" fill="#2b3a44"/>
-      </svg>
-    </div>
+
+    <figure class="scoresheet">
+      <figcaption class="scoresheet-title">The details</figcaption>
+      <dl>
+        <div class="row"><dt>When</dt><dd>Fridays, 4:00–5:00 PM</dd></div>
+        <div class="row"><dt>Where</dt><dd>Spuyten Duyvil Library, New York Public Library</dd></div>
+        <div class="row"><dt>Who</dt><dd>Kids of every level, from first-timers to tournament players</dd></div>
+        <div class="row"><dt>Cost</dt><dd>Free</dd></div>
+        <div class="row"><dt>Breaks</dt><dd>No sessions when NYC public schools are closed</dd></div>
+      </dl>
+    </figure>
   </div>
 </section>
 
-<section class="band-alt" id="curriculum">
+<section class="band-rose" id="curriculum">
   <div class="wrap">
-    <h2 class="section-title">Weekly curriculum</h2>
-    <p style="color:var(--ink-soft); max-width:560px; margin-bottom:36px;">Here's what we're covering, week by week. The card below automatically shows the current week — scroll the row to preview any other week.</p>
-
-    <div class="curriculum-feature" id="curriculum-feature">
-      <!-- Filled in by JavaScript at the bottom of the page -->
+    <div class="section-head">
+      <h2>Weekly curriculum</h2>
+      <p>Here's what we're covering next. Tap any other week to see what's coming up or what you missed.</p>
     </div>
-
-    <div class="curriculum-rail" id="curriculum-rail">
-      <!-- Week pills filled in by JavaScript -->
+    <div class="curriculum-grid">
+      <ol class="week-list" id="week-list" aria-label="Weeks"></ol>
+      <article class="lesson" id="curriculum-feature" aria-live="polite"></article>
     </div>
   </div>
 </section>
 
 <section id="coaches">
   <div class="wrap">
-    <h2 class="section-title">Meet your coaches</h2>
-    <p style="color:var(--ink-soft); max-width:560px; margin-bottom:40px;">Two nationally ranked women's chess players bring real tournament experience and years of tutoring to every session.</p>
+    <div class="section-head">
+      <h2>Meet your coaches</h2>
+      <p>Two nationally ranked women's chess players bring real tournament experience and years of tutoring to every session.</p>
+    </div>
     <div class="coach-list">
-      <div class="coach-card">
-        <div class="coach-avatar"></div>
-        <h3>Madison Wu</h3>
-        <div class="coach-role">Co-Founder &amp; Head Coach, Beginners · Nationally Ranked Player</div>
+      <article class="coach">
+        <div class="coach-top">
+          <div class="initials rose" aria-hidden="true">MW</div>
+          <div>
+            <h3>Madison Wu</h3>
+            <div class="coach-role">Co-founder, head coach for beginners</div>
+          </div>
+        </div>
         <p>Madison has played competitive chess for 11 years and is a nationally ranked female player and co-captain of the Riverdale Country School chess team. She co-founded The Great Chess Piece to give more girls a seat at the board and the confidence to stay there. Off the board, she's a third-degree black belt in taekwondo who competes internationally, and she spends her spare hours doing astrophysics research.</p>
-      </div>
-      <div class="coach-card">
-        <div class="coach-avatar"></div>
-        <h3>Summer Li</h3>
-        <div class="coach-role">Co-Founder &amp; Head Coach, Intermediate/Advanced · Nationally Ranked Player</div>
-        <p>Summer has played chess for 7 years and has been nationally ranked for the past 3. She co-founded The Great Chess Piece after noticing the gender imbalance in competitive chess, and she wants more girls to feel they belong at the board. A co-leader of her school's math team, she loves machine learning and has spent three years doing research in astrophysics, neuroscience, bioinformatics, and now computational chess. Her art has won national awards and been exhibited at the Met. Off the board, you'll find her at a concert.</p>    </div>
-      </div>
-</section>
-
-<section id="events">
-  <div class="wrap">
-    <h2 class="section-title">Upcoming sessions</h2>
-    <p style="color:var(--ink-soft); max-width:560px; margin-bottom:10px;">We meet every Friday, 4:00–5:00 PM, at the Spuyten Duyvil branch of the New York Public Library. We follow the NYC public school calendar, so there are no sessions during school holidays and breaks.</p>
-    <ul class="event-list" id="event-list">
-      <!-- Filled in by JavaScript from the curriculum and breaks lists at the bottom of the page -->
-    </ul>
-    <button type="button" class="btn-secondary schedule-toggle" id="schedule-toggle" hidden>Show full schedule</button>
-  </div>
-</section>
-
-<section class="band-alt" id="gallery">
-  <div class="wrap">
-    <h2 class="section-title">From our sessions</h2>
-    <p style="color:var(--ink-soft); max-width:560px; margin-bottom:30px;">A few moments from our sessions at the library.</p>
-    <div class="gallery-grid">
-      <img class="gallery-photo" src="images/session-1.jpg" alt="Students decorating name cards around a long table set with chess boards">
-      <img class="gallery-photo" src="images/session-2.jpg" alt="Students playing chess at library tables">
-      <img class="gallery-photo" src="images/session-3.jpg" alt="Students concentrating on two games of chess">
+      </article>
+      <article class="coach">
+        <div class="coach-top">
+          <div class="initials blue" aria-hidden="true">SL</div>
+          <div>
+            <h3>Summer Li</h3>
+            <div class="coach-role">Co-founder, head coach for intermediate and advanced players</div>
+          </div>
+        </div>
+        <p>Summer has played chess for 7 years and has been nationally ranked for the past 3. She co-founded The Great Chess Piece after noticing the gender imbalance in competitive chess, and she wants more girls to feel they belong at the board. A co-leader of her school's math team, she loves machine learning and has spent three years doing research in astrophysics, neuroscience, bioinformatics, and now computational chess. Her art has won national awards and been exhibited at the Met. Off the board, you'll find her at a concert.</p>
+      </article>
     </div>
   </div>
 </section>
 
-<section id="join">
+<section class="band-rose" id="events">
   <div class="wrap">
-    <div class="join-panel">
+    <div class="section-head">
+      <h2>Upcoming sessions</h2>
+      <p>We meet every Friday, 4:00–5:00 PM, at the Spuyten Duyvil branch of the New York Public Library. We follow the NYC public school calendar, so there are no sessions during school holidays and breaks.</p>
+    </div>
+    <ul class="event-list" id="event-list"></ul>
+    <button type="button" class="btn btn-ghost schedule-toggle" id="schedule-toggle" aria-expanded="false" hidden>Show full schedule</button>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>From our sessions</h2>
+      <p>A few moments from our sessions at the library.</p>
+    </div>
+    <div class="gallery-grid">
+      <img src="images/session-3.jpg" alt="Students concentrating on two games of chess" loading="lazy">
+      <img src="images/session-1.jpg" alt="Students decorating name cards around a long table set with chess boards" loading="lazy">
+      <img src="images/session-2.jpg" alt="Students playing chess at library tables" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section id="join" style="padding-top:0;">
+  <div class="wrap">
+    <div class="join">
       <div>
         <h2>Ready to make your first move?</h2>
-        <p>Sign up in a couple of minutes — there's no cost, and no experience is required. Just bring your curiosity.</p>
+        <p>Signing up takes about two minutes. It's free, and you don't need any chess experience.</p>
       </div>
-      <div class="form-embed">
-        <p style="color:white; margin-bottom:18px;">Sign-up form</p>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeQKUAH6P0RXWulYfof2eOdaRsX8xOPw3RcJ4bbovur1lH-9w/viewform" class="btn-primary" id="form-link" target="_blank" rel="noopener">Open sign-up form</a>
-        <small>Opens in a new tab and takes about two minutes.</small>
+      <div class="join-cta">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeQKUAH6P0RXWulYfof2eOdaRsX8xOPw3RcJ4bbovur1lH-9w/viewform" class="btn btn-primary" id="form-link" target="_blank" rel="noopener">Open the sign-up form</a>
+        <small>Opens Google Forms in a new tab</small>
       </div>
     </div>
   </div>
@@ -459,16 +483,16 @@
     <div class="foot-grid">
       <div>
         <div class="foot-brand">The Great Chess Piece</div>
-        <p style="margin-top:8px; max-width:320px; font-size:0.9rem;">A free, community-run chess program for young players.</p>
+        <p>Free chess lessons for kids at the Spuyten Duyvil Library.</p>
       </div>
       <ul class="foot-links">
         <li><a href="#about">About</a></li>
         <li><a href="#coaches">Coaches</a></li>
-        <li><a href="#events">Events</a></li>
-        <li><a href="mailto:hello@example.com">Contact us</a></li>
+        <li><a href="#events">Sessions</a></li>
+        <li><a href="mailto:sli27@riverdale.edu,mwu27@riverdale.edu">Contact us</a></li>
       </ul>
     </div>
-    <div class="fine">Replace the contact email above with your real one. &copy; 2026 The Great Chess Piece.</div>
+    <div class="fine">&copy; 2026 The Great Chess Piece.</div>
   </div>
 </footer>
 
@@ -618,67 +642,94 @@
   // Fridays we skip because NYC public schools are closed.
   // "date" is the first skipped Friday, "until" is the last one (leave it out for a single day).
   const breaks = [
-    { date: "2026-11-27", label: "No session — Thanksgiving break" },
-    { date: "2026-12-25", until: "2027-01-01", dateLabel: "Dec 25 & Jan 1", label: "No sessions — Winter break" },
-    { date: "2027-02-19", label: "No session — Midwinter break" },
-    { date: "2027-03-26", label: "No session — Good Friday (schools closed)" }
+    { date: "2026-11-27", label: "Thanksgiving break, no session" },
+    { date: "2026-12-25", until: "2027-01-01", dateLabel: "Dec 25 & Jan 1", label: "Winter break, no sessions" },
+    { date: "2027-02-19", label: "Midwinter break, no session" },
+    { date: "2027-03-26", label: "Good Friday, no session" }
   ];
 
   // How many upcoming rows to show before the "Show full schedule" button.
   const UPCOMING_PREVIEW = 6;
 
-  function toDate(dateStr){ return new Date(dateStr + "T00:00:00"); }
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function formatWeekDate(dateStr){
-    return toDate(dateStr).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+  function toDate(dateStr){ return new Date(dateStr + "T00:00:00"); }
+  function formatLongDate(dateStr){
+    return toDate(dateStr).toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' });
   }
   function formatShortDate(dateStr){
-    return toDate(dateStr).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    return toDate(dateStr).toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
+  }
+  function formatTinyDate(dateStr){
+    return toDate(dateStr).toLocaleDateString('en-US', { month:'short', day:'numeric' });
   }
 
   const today = new Date();
   today.setHours(0,0,0,0);
 
-  // Figure out which week is "current": the latest week whose date has
-  // already arrived. Before week 1 starts, it defaults to week 1.
-  function getCurrentWeekIndex(){
-    let idx = 0;
+  // The "next" week is the first session today or later.
+  // After the last session, it falls back to the final week.
+  function getNextWeekIndex(){
     for (let i = 0; i < curriculum.length; i++){
-      if (toDate(curriculum[i].date) <= today) idx = i;
+      if (toDate(curriculum[i].date) >= today) return i;
     }
-    return idx;
+    return curriculum.length - 1;
   }
+  const nextWeekIndex = getNextWeekIndex();
 
-  const currentWeekIndex = getCurrentWeekIndex();
-
-  function renderFeature(index){
+  // ---- CURRICULUM ----
+  function renderFeature(index, animate){
     const week = curriculum[index];
-    const isCurrent = index === currentWeekIndex;
-    document.getElementById('curriculum-feature').innerHTML = `
-      ${isCurrent ? '<span class="badge">This week</span><br>' : ''}
-      <div class="week-num">Week ${index + 1}</div>
+    const d = toDate(week.date);
+    const isToday = d.getTime() === today.getTime();
+    const isPast = d < today;
+    let status = '';
+    if (index === nextWeekIndex && !isPast) status = `<span class="pill rose">${isToday ? 'Today' : 'Up next'}</span>`;
+    else if (isPast) status = `<span class="pill">Already covered</span>`;
+    const tag = week.tag ? `<span class="pill">${week.tag}</span>` : '';
+
+    const card = document.getElementById('curriculum-feature');
+    card.innerHTML = `
+      <div class="lesson-meta">${status}${tag}<span>Week ${index + 1}, ${formatLongDate(week.date)}</span></div>
       <h3>${week.title}</h3>
-      <div class="week-date">${formatWeekDate(week.date)} · ${SESSION_TIME}</div>
       <p>${week.description}</p>
-      <ul>${week.objectives.map(o => `<li>${o}</li>`).join('')}</ul>
+      <h4>By the end, students can</h4>
+      <ul class="goals">${week.objectives.map(o => `<li>${o}</li>`).join('')}</ul>
     `;
-    document.querySelectorAll('.week-pill').forEach((pill, i) => {
-      pill.classList.toggle('active', i === index);
+    if (animate){
+      card.classList.remove('swap'); void card.offsetWidth; card.classList.add('swap');
+    }
+    document.querySelectorAll('.week').forEach((btn, i) => {
+      btn.classList.toggle('active', i === index);
+      if (i === index) btn.setAttribute('aria-current', 'true'); else btn.removeAttribute('aria-current');
     });
   }
 
-  function renderRail(){
-    const rail = document.getElementById('curriculum-rail');
-    rail.innerHTML = curriculum.map((week, i) => `
-      <button class="week-pill" data-index="${i}">
-        ${i === currentWeekIndex ? '<span class="pill-current">Current</span>' : ''}
-        <div class="pill-week">Week ${i + 1}</div>
-        <div class="pill-title">${week.title}</div>
-      </button>
-    `).join('');
-    rail.querySelectorAll('.week-pill').forEach(pill => {
-      pill.addEventListener('click', () => renderFeature(parseInt(pill.dataset.index, 10)));
+  function renderWeekList(){
+    const list = document.getElementById('week-list');
+    list.innerHTML = curriculum.map((week, i) => {
+      const past = toDate(week.date) < today;
+      const cls = ['week', past ? 'is-past' : '', i === nextWeekIndex && !past ? 'is-next' : ''].join(' ').trim();
+      return `<li><button type="button" class="${cls}" data-index="${i}">
+        <span class="w-num">Week ${i + 1}</span>
+        <span class="w-date">${formatTinyDate(week.date)}</span>
+        <span class="w-title">${week.title}</span>
+      </button></li>`;
+    }).join('');
+    list.querySelectorAll('.week').forEach(btn => {
+      btn.addEventListener('click', () => renderFeature(parseInt(btn.dataset.index, 10), !reduceMotion));
     });
+  }
+
+  // Center the active week inside the list (sideways on phones, up/down on desktop)
+  // without moving the page itself.
+  function centerActiveWeek(){
+    const list = document.getElementById('week-list');
+    const btn = list.querySelector('.week.active');
+    if (!btn) return;
+    const l = list.getBoundingClientRect(), b = btn.getBoundingClientRect();
+    list.scrollTop  += (b.top  - l.top)  - (l.height - b.height) / 2;
+    list.scrollLeft += (b.left - l.left) - (l.width  - b.width)  / 2;
   }
 
   // ---- UPCOMING SESSIONS ----
@@ -696,31 +747,29 @@
     const items = sessions.concat(skipped).sort((a, b) => toDate(a.sortDate) - toDate(b.sortDate));
 
     if (items.length === 0){
-      list.innerHTML = `<li><div class="event-date">Soon</div><div><h3>New sessions coming soon</h3><p>Check back for next season's schedule.</p></div></li>`;
+      list.innerHTML = `<li><div class="event-date">Soon</div><div><h3>New sessions coming soon</h3><p>Check back for next season's schedule, or email us to hear first.</p></div></li>`;
       return;
     }
 
     let firstSession = true;
     list.innerHTML = items.map((item, i) => {
-      const hidden = i >= UPCOMING_PREVIEW ? ' is-hidden' : '';
+      const hidden = i >= UPCOMING_PREVIEW ? 'is-hidden' : '';
       if (item.isBreak){
-        return `
-          <li class="is-break${hidden}">
+        return `<li class="is-break ${hidden}">
             <div class="event-date">${item.brk.dateLabel || formatShortDate(item.brk.date)}</div>
             <div><h3>${item.brk.label}</h3></div>
           </li>`;
       }
       const w = item.week;
       const tags = [];
-      if (firstSession) tags.push('Next up');
-      if (w.tag) tags.push(w.tag);
+      if (firstSession) tags.push('<span class="pill rose">Up next</span>');
+      if (w.tag) tags.push(`<span class="pill">${w.tag}</span>`);
       firstSession = false;
-      return `
-        <li class="${hidden.trim()}">
+      return `<li class="${hidden}">
           <div class="event-date">${formatShortDate(w.date)}</div>
           <div>
-            <h3>${w.title}${tags.map(t => `<span class="event-tag">${t}</span>`).join('')}</h3>
-            <p>${SESSION_TIME} · ${SESSION_PLACE}</p>
+            <h3>${w.title}${tags.join('')}</h3>
+            <p>${SESSION_TIME}, ${SESSION_PLACE}</p>
           </div>
         </li>`;
     }).join('');
@@ -730,7 +779,12 @@
       toggle.addEventListener('click', () => {
         const expanded = toggle.getAttribute('aria-expanded') === 'true';
         list.querySelectorAll('li').forEach((li, i) => {
-          if (i >= UPCOMING_PREVIEW) li.classList.toggle('is-hidden', expanded);
+          if (i < UPCOMING_PREVIEW) return;
+          li.classList.toggle('is-hidden', expanded);
+          if (!expanded){
+            li.classList.add('reveal');
+            li.style.animationDelay = `${(i - UPCOMING_PREVIEW) * 40}ms`;
+          }
         });
         toggle.setAttribute('aria-expanded', String(!expanded));
         toggle.textContent = expanded ? 'Show full schedule' : 'Show fewer';
@@ -738,19 +792,139 @@
     }
   }
 
-  renderRail();
-  renderFeature(currentWeekIndex);
+  renderWeekList();
+  renderFeature(nextWeekIndex, false);
+  centerActiveWeek();
   renderUpcoming();
 
-  // Scroll the curriculum row sideways so the current week's pill is centered
-  // (without jumping the whole page down to the curriculum section).
-  const rail = document.getElementById('curriculum-rail');
-  const activePill = rail.querySelector('.week-pill.active');
-  if (activePill){
-    const railBox = rail.getBoundingClientRect();
-    const pillBox = activePill.getBoundingClientRect();
-    rail.scrollLeft += (pillBox.left - railBox.left) - (railBox.width - pillBox.width) / 2;
-  }
+  // ---- HERO BOARD: plays the Scholar's Mate on a loop ----
+  (function(){
+    const FILES = 'abcdefgh';
+    const START = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
+    const GLYPH = { k:'♚', q:'♛', r:'♜', b:'♝', n:'♞', p:'♟' };
+    const INTRO = { move:'Watch', note:'A real trap beginners fall for. Can you see it coming?' };
+    const MOVES = [
+      { from:'e2', to:'e4', move:'1. e4',     note:'White takes the center.' },
+      { from:'e7', to:'e5', move:'1… e5',     note:'Black does the same.' },
+      { from:'d1', to:'h5', move:'2. Qh5',    note:'The queen comes out early. Bold!' },
+      { from:'b8', to:'c6', move:'2… Nc6',    note:'Black protects the pawn on e5.' },
+      { from:'f1', to:'c4', move:'3. Bc4',    note:'Now the queen and bishop both aim at f7.' },
+      { from:'g8', to:'f6', move:'3… Nf6??',  note:'Black attacks the queen but misses the threat.' },
+      { from:'h5', to:'f7', move:'4. Qxf7#',  note:'Checkmate! This trap is called the Scholar’s Mate.', mate:'e8' }
+    ];
+
+    const squaresEl = document.getElementById('squares');
+    const piecesEl  = document.getElementById('pieces');
+    const capMove   = document.getElementById('cap-move');
+    const capNote   = document.getElementById('cap-note');
+    const caption   = document.getElementById('board-caption');
+    const sqEls = {};
+    let pieceAt = {};
+
+    const xy = sq => ({ x: FILES.indexOf(sq[0]), y: 8 - parseInt(sq[1], 10) });
+
+    // Build the 64 squares once
+    for (let y = 0; y < 8; y++){
+      for (let x = 0; x < 8; x++){
+        const name = FILES[x] + (8 - y);
+        const el = document.createElement('div');
+        el.className = 'sq' + ((x + y) % 2 ? ' dark' : '');
+        if (x === 0) el.insertAdjacentHTML('beforeend', `<span class="coord rank">${8 - y}</span>`);
+        if (y === 7) el.insertAdjacentHTML('beforeend', `<span class="coord file">${FILES[x]}</span>`);
+        squaresEl.appendChild(el);
+        sqEls[name] = el;
+      }
+    }
+
+    function placePiece(el, sq){
+      const p = xy(sq);
+      el.style.setProperty('--x', p.x);
+      el.style.setProperty('--y', p.y);
+    }
+
+    function setupPieces(){
+      piecesEl.innerHTML = '';
+      pieceAt = {};
+      START.split('/').forEach((row, y) => {
+        let x = 0;
+        for (const ch of row){
+          if (/\d/.test(ch)){ x += parseInt(ch, 10); continue; }
+          const sq = FILES[x] + (8 - y);
+          const el = document.createElement('span');
+          el.className = 'piece ' + (ch === ch.toUpperCase() ? 'white' : 'black');
+          el.textContent = GLYPH[ch.toLowerCase()] + '︎';
+          placePiece(el, sq);
+          piecesEl.appendChild(el);
+          pieceAt[sq] = el;
+          x++;
+        }
+      });
+      Object.values(sqEls).forEach(s => s.classList.remove('last', 'mate'));
+    }
+
+    function setCaption(c, instant){
+      if (instant){ capMove.textContent = c.move; capNote.textContent = c.note; return; }
+      caption.classList.add('swapping');
+      setTimeout(() => {
+        capMove.textContent = c.move; capNote.textContent = c.note;
+        caption.classList.remove('swapping');
+      }, 250);
+    }
+
+    function play(m, instant){
+      Object.values(sqEls).forEach(s => s.classList.remove('last'));
+      const mover = pieceAt[m.from];
+      const victim = pieceAt[m.to];
+      if (victim) victim.classList.add('captured');
+      mover.classList.add('moving');
+      placePiece(mover, m.to);
+      setTimeout(() => mover.classList.remove('moving'), 700);
+      delete pieceAt[m.from];
+      pieceAt[m.to] = mover;
+      sqEls[m.from].classList.add('last');
+      sqEls[m.to].classList.add('last');
+      if (m.mate) sqEls[m.mate].classList.add('mate');
+      setCaption(m, instant);
+    }
+
+    setupPieces();
+
+    // Reduced motion: just show the finished checkmate, no animation.
+    if (reduceMotion){
+      MOVES.forEach(m => play(m, true));
+      return;
+    }
+
+    // Only run while the board is on screen and the tab is open.
+    let visible = false, wake = null;
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+    const whenVisible = () => (visible && !document.hidden) ? Promise.resolve() : new Promise(r => { wake = r; });
+    const check = () => { if (visible && !document.hidden && wake){ const w = wake; wake = null; w(); } };
+    new IntersectionObserver(entries => { visible = entries[0].isIntersecting; check(); }, { threshold:0.25 })
+      .observe(document.getElementById('board'));
+    document.addEventListener('visibilitychange', check);
+
+    setCaption(INTRO, true);
+    (async function loop(){
+      while (true){
+        await whenVisible();
+        await sleep(1400);
+        for (const m of MOVES){
+          await whenVisible();
+          play(m);
+          await sleep(m.mate ? 4800 : 1700);
+        }
+        piecesEl.classList.add('fading');
+        caption.classList.add('swapping');
+        await sleep(500);
+        setupPieces();
+        setCaption(INTRO, true);
+        await sleep(60);
+        piecesEl.classList.remove('fading');
+        caption.classList.remove('swapping');
+      }
+    })();
+  })();
 </script>
 
 </body>
