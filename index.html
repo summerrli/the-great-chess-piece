@@ -249,6 +249,10 @@
   .gallery-item:nth-child(6n+4){ background: var(--blue-light); }
   .gallery-item:nth-child(6n+5){ background: var(--rose-light); }
   .gallery-item:nth-child(6n+6){ background: #f0eae5; }
+  .gallery-photo{
+    width:100%; aspect-ratio: 4/3; object-fit: cover;
+    border-radius:4px;
+  }
 
   /* -------- JOIN -------- */
   .join-panel{
@@ -429,14 +433,11 @@
 <section class="band-alt" id="gallery">
   <div class="wrap">
     <h2 class="section-title">From our sessions</h2>
-    <p style="color:var(--ink-soft); max-width:560px; margin-bottom:30px;">Add your own photos here once you have them — just replace each box below with an &lt;img&gt; tag.</p>
+    <p style="color:var(--ink-soft); max-width:560px; margin-bottom:30px;">A few moments from our sessions at the library.</p>
     <div class="gallery-grid">
-      <div class="gallery-item">Photo placeholder<br>(add your image)</div>
-      <div class="gallery-item">Photo placeholder<br>(add your image)</div>
-      <div class="gallery-item">Photo placeholder<br>(add your image)</div>
-      <div class="gallery-item">Photo placeholder<br>(add your image)</div>
-      <div class="gallery-item">Photo placeholder<br>(add your image)</div>
-      <div class="gallery-item">Photo placeholder<br>(add your image)</div>
+      <img class="gallery-photo" src="images/session-1.jpg" alt="Students decorating name cards around a long table set with chess boards">
+      <img class="gallery-photo" src="images/session-2.jpg" alt="Students playing chess at library tables">
+      <img class="gallery-photo" src="images/session-3.jpg" alt="Students concentrating on two games of chess">
     </div>
   </div>
 </section>
