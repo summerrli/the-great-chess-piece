@@ -174,6 +174,7 @@
     display:flex;
     gap: 14px;
     overflow-x: auto;
+    padding-top: 12px;
     padding-bottom: 10px;
     scroll-behavior: smooth;
   }
@@ -232,6 +233,20 @@
   }
   .event-list h3{ font-size:1.05rem; margin-bottom:4px; }
   .event-list p{ color: var(--ink-soft); margin-bottom:0; font-size:0.95rem; }
+  .event-list li.is-break .event-date{ color: var(--ink-soft); }
+  .event-list li.is-break h3{ color: var(--ink-soft); font-weight:500; font-style:italic; }
+  .event-list li.is-hidden{ display:none; }
+  .event-tag{
+    display:inline-block; margin-left:8px; vertical-align:middle;
+    background: var(--blue-light); color: var(--blue-dark);
+    font-family:'Work Sans', sans-serif; font-size:0.72rem; font-weight:600;
+    padding:2px 9px; border-radius:10px;
+  }
+  .schedule-toggle{
+    margin-top: 26px; background:none; cursor:pointer;
+    font-family:'Work Sans', sans-serif; font-size:0.95rem;
+  }
+  .schedule-toggle[hidden]{ display:none; }
 
   /* -------- GALLERY -------- */
   .gallery-grid{
@@ -403,30 +418,11 @@
 <section id="events">
   <div class="wrap">
     <h2 class="section-title">Upcoming sessions</h2>
-    <p style="color:var(--ink-soft); max-width:560px; margin-bottom:10px;">Swap these placeholders for your real dates, times, and locations.</p>
-    <ul class="event-list">
-      <li>
-        <div class="event-date">Sat, Oct 4</div>
-        <div>
-          <h3>Beginner Session — Basics & Board Setup</h3>
-          <p>10:00–11:30 AM · Community Center Room 2</p>
-        </div>
-      </li>
-      <li>
-        <div class="event-date">Sat, Oct 11</div>
-        <div>
-          <h3>Strategy Workshop — Openings 101</h3>
-          <p>10:00–11:30 AM · Community Center Room 2</p>
-        </div>
-      </li>
-      <li>
-        <div class="event-date">Sat, Oct 18</div>
-        <div>
-          <h3>Friendly Tournament — All Levels</h3>
-          <p>10:00 AM–12:30 PM · Community Center Main Hall</p>
-        </div>
-      </li>
+    <p style="color:var(--ink-soft); max-width:560px; margin-bottom:10px;">We meet every Friday, 4:00–5:00 PM, at the Spuyten Duyvil branch of the New York Public Library. We follow the NYC public school calendar, so there are no sessions during school holidays and breaks.</p>
+    <ul class="event-list" id="event-list">
+      <!-- Filled in by JavaScript from the curriculum and breaks lists at the bottom of the page -->
     </ul>
+    <button type="button" class="btn-secondary schedule-toggle" id="schedule-toggle" hidden>Show full schedule</button>
   </div>
 </section>
 
@@ -451,8 +447,8 @@
       </div>
       <div class="form-embed">
         <p style="color:white; margin-bottom:18px;">Sign-up form</p>
-        <a href="#" class="btn-primary" id="form-link">Open sign-up form</a>
-        <small>Replace the link on this button with your Google Form URL.</small>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeQKUAH6P0RXWulYfof2eOdaRsX8xOPw3RcJ4bbovur1lH-9w/viewform" class="btn-primary" id="form-link" target="_blank" rel="noopener">Open sign-up form</a>
+        <small>Opens in a new tab and takes about two minutes.</small>
       </div>
     </div>
   </div>
@@ -477,75 +473,178 @@
 </footer>
 
 <script>
+  // ---- SESSION DETAILS ----
+  // Every session happens at the same time and place. Change these two lines if that ever changes.
+  const SESSION_TIME  = "4:00–5:00 PM";
+  const SESSION_PLACE = "Spuyten Duyvil Library";
+
   // ---- WEEKLY CURRICULUM ----
   // To edit: change the text below, or add/remove week objects.
-  // "date" is the Monday each week's lesson starts — the site uses it to
-  // figure out which week is "current" automatically, no manual updates needed.
+  // "date" is the Friday the session happens (YYYY-MM-DD). The site uses it to
+  // work out which week is "current" and which sessions are still upcoming,
+  // so there are no manual updates needed. Add  tag: "Tournament"  to label a week.
   const curriculum = [
     {
-      date: "2026-10-04",
+      date: "2026-10-02",
       title: "Meet the Board",
       description: "Students learn the chessboard layout, how to set up all 32 pieces correctly, and basic chess notation.",
       objectives: ["Set up a board from memory", "Name each piece and its starting square", "Read simple square coordinates (e.g. e4)"]
     },
     {
-      date: "2026-10-11",
+      date: "2026-10-09",
       title: "How the Pieces Move",
       description: "A hands-on walkthrough of how each piece moves and captures, with lots of practice on an empty board.",
       objectives: ["Move every piece correctly", "Understand legal vs. illegal moves", "Practice simple captures"]
     },
     {
-      date: "2026-10-18",
+      date: "2026-10-16",
       title: "Check and Checkmate",
       description: "Introducing the goal of the game: what check and checkmate actually mean, and how to spot them.",
       objectives: ["Recognize when a king is in check", "Deliver a basic checkmate", "Avoid moving into check"]
     },
     {
-      date: "2026-10-25",
+      date: "2026-10-23",
       title: "Special Moves",
       description: "Covering the game's trickier rules — castling, en passant, and pawn promotion.",
       objectives: ["Castle kingside and queenside", "Explain en passant", "Promote a pawn correctly"]
     },
     {
-      date: "2026-11-01",
+      date: "2026-10-30",
       title: "Opening Principles",
       description: "Simple, memorable rules for the first few moves of any game: control the center, develop pieces, keep the king safe.",
       objectives: ["Play a solid opening move", "Explain why the center matters", "Avoid early queen moves"]
     },
     {
-      date: "2026-11-08",
+      date: "2026-11-06",
       title: "Tactics I: Forks & Pins",
       description: "Our first tactics session — spotting moves that attack two things at once.",
       objectives: ["Identify a fork", "Identify a pin", "Find a simple tactic in a practice position"]
     },
     {
-      date: "2026-11-15",
+      date: "2026-11-13",
       title: "Tactics II: Skewers & Discoveries",
       description: "Building on last week with two more tactical patterns players use to win material.",
       objectives: ["Identify a skewer", "Identify a discovered attack", "Combine tactics in a mini puzzle set"]
     },
     {
-      date: "2026-11-22",
+      date: "2026-11-20",
       title: "Endgame Basics",
       description: "What happens when most pieces are off the board — king and pawn endgames and the idea of opposition.",
       objectives: ["Explain the idea of opposition", "Promote a lone pawn with king support", "Recognize a drawn king-and-pawn ending"]
+    },
+    {
+      date: "2026-12-04",
+      title: "Checkmate Patterns",
+      description: "The classic mates every player should know by heart, so finishing a winning game becomes automatic.",
+      objectives: ["Deliver a back-rank mate", "Mate with two rooks (the ladder)", "Mate with king and queen against a lone king"]
+    },
+    {
+      date: "2026-12-11",
+      title: "Piece Values & Smart Trades",
+      description: "How much each piece is worth, and how to decide whether a trade actually helps you.",
+      objectives: ["Know the point value of each piece", "Count material before trading", "Spot when a trade helps the player who's ahead"]
+    },
+    {
+      date: "2026-12-18",
+      title: "Winter Mini-Tournament",
+      tag: "Tournament",
+      description: "A friendly, low-pressure tournament before winter break. Everyone plays, and every game gets a quick review with a coach.",
+      objectives: ["Play complete games with a partner", "Record a game in notation", "Review one game with a coach"]
+    },
+    {
+      date: "2027-01-08",
+      title: "Welcome Back: Puzzle Rush",
+      description: "Shaking off the winter break with a fast-paced review of everything from the fall, in puzzle form.",
+      objectives: ["Review fall tactics and checkmates", "Solve puzzles against the clock", "Set a personal puzzle goal for the spring"]
+    },
+    {
+      date: "2027-01-15",
+      title: "Making a Plan",
+      description: "What to do after the opening: looking at the position and choosing a plan instead of moving at random.",
+      objectives: ["Find your worst-placed piece", "Pick a target to attack", "Explain the plan behind a move"]
+    },
+    {
+      date: "2027-01-22",
+      title: "Pawn Structure",
+      description: "Pawns are the skeleton of the position. We look at strong and weak pawns and how they shape the game.",
+      objectives: ["Spot doubled, isolated, and passed pawns", "Use a passed pawn", "Avoid creating weaknesses"]
+    },
+    {
+      date: "2027-01-29",
+      title: "Attacking the King",
+      description: "How to build an attack: bringing pieces toward the king, opening lines, and knowing when to strike.",
+      objectives: ["Bring more attackers than defenders", "Open a file toward the king", "Recognize a weakened king position"]
+    },
+    {
+      date: "2027-02-05",
+      title: "Defense & Counterattack",
+      description: "The other side of attacking: staying calm under pressure and turning the tables.",
+      objectives: ["Ask \"what is my opponent threatening?\" every move", "Defend with the least valuable piece", "Find a counterattack when defending is hard"]
+    },
+    {
+      date: "2027-02-12",
+      title: "Rook Endgames",
+      description: "The most common endgame in chess, with the key ideas that save half-points and win games.",
+      objectives: ["Put rooks behind passed pawns", "Cut off the enemy king", "Activate the king in the endgame"]
+    },
+    {
+      date: "2027-02-26",
+      title: "Learning from Classic Games",
+      description: "We play through a few famous games together and steal ideas from the masters.",
+      objectives: ["Follow a game in notation", "Predict the next move", "Name one idea to use in your own games"]
+    },
+    {
+      date: "2027-03-05",
+      title: "Calculation & Visualization",
+      description: "Seeing moves in your head before you play them. Training exercises to look a few moves ahead.",
+      objectives: ["Check every capture, check, and threat", "Calculate a two-move sequence without moving pieces", "Double-check before letting go of a piece"]
+    },
+    {
+      date: "2027-03-12",
+      title: "Tournament Prep",
+      description: "Everything you need for real tournaments: using a chess clock, writing down moves, and tournament manners.",
+      objectives: ["Use a chess clock", "Record a full game", "Know the touch-move rule and good sportsmanship"]
+    },
+    {
+      date: "2027-03-19",
+      title: "Spring Tournament",
+      tag: "Tournament",
+      description: "Putting it all together. A friendly tournament for every level, with a small celebration at the end.",
+      objectives: ["Play rated-style games with a clock", "Record every game", "Celebrate a great season!"]
     }
   ];
 
+  // ---- NO-SESSION DAYS ----
+  // Fridays we skip because NYC public schools are closed.
+  // "date" is the first skipped Friday, "until" is the last one (leave it out for a single day).
+  const breaks = [
+    { date: "2026-11-27", label: "No session — Thanksgiving break" },
+    { date: "2026-12-25", until: "2027-01-01", dateLabel: "Dec 25 & Jan 1", label: "No sessions — Winter break" },
+    { date: "2027-02-19", label: "No session — Midwinter break" },
+    { date: "2027-03-26", label: "No session — Good Friday (schools closed)" }
+  ];
+
+  // How many upcoming rows to show before the "Show full schedule" button.
+  const UPCOMING_PREVIEW = 6;
+
+  function toDate(dateStr){ return new Date(dateStr + "T00:00:00"); }
+
   function formatWeekDate(dateStr){
-    const d = new Date(dateStr + "T00:00:00");
-    return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    return toDate(dateStr).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
   }
+  function formatShortDate(dateStr){
+    return toDate(dateStr).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  }
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
 
   // Figure out which week is "current": the latest week whose date has
   // already arrived. Before week 1 starts, it defaults to week 1.
   function getCurrentWeekIndex(){
-    const today = new Date();
-    today.setHours(0,0,0,0);
     let idx = 0;
     for (let i = 0; i < curriculum.length; i++){
-      const weekDate = new Date(curriculum[i].date + "T00:00:00");
-      if (weekDate <= today) idx = i;
+      if (toDate(curriculum[i].date) <= today) idx = i;
     }
     return idx;
   }
@@ -559,7 +658,7 @@
       ${isCurrent ? '<span class="badge">This week</span><br>' : ''}
       <div class="week-num">Week ${index + 1}</div>
       <h3>${week.title}</h3>
-      <div class="week-date">Starts ${formatWeekDate(week.date)}</div>
+      <div class="week-date">${formatWeekDate(week.date)} · ${SESSION_TIME}</div>
       <p>${week.description}</p>
       <ul>${week.objectives.map(o => `<li>${o}</li>`).join('')}</ul>
     `;
@@ -582,12 +681,76 @@
     });
   }
 
+  // ---- UPCOMING SESSIONS ----
+  // Built from the curriculum and breaks lists above; past dates drop off automatically.
+  function renderUpcoming(){
+    const list = document.getElementById('event-list');
+    const toggle = document.getElementById('schedule-toggle');
+
+    const sessions = curriculum
+      .filter(w => toDate(w.date) >= today)
+      .map(w => ({ sortDate: w.date, isBreak: false, week: w }));
+    const skipped = breaks
+      .filter(b => toDate(b.until || b.date) >= today)
+      .map(b => ({ sortDate: b.date, isBreak: true, brk: b }));
+    const items = sessions.concat(skipped).sort((a, b) => toDate(a.sortDate) - toDate(b.sortDate));
+
+    if (items.length === 0){
+      list.innerHTML = `<li><div class="event-date">Soon</div><div><h3>New sessions coming soon</h3><p>Check back for next season's schedule.</p></div></li>`;
+      return;
+    }
+
+    let firstSession = true;
+    list.innerHTML = items.map((item, i) => {
+      const hidden = i >= UPCOMING_PREVIEW ? ' is-hidden' : '';
+      if (item.isBreak){
+        return `
+          <li class="is-break${hidden}">
+            <div class="event-date">${item.brk.dateLabel || formatShortDate(item.brk.date)}</div>
+            <div><h3>${item.brk.label}</h3></div>
+          </li>`;
+      }
+      const w = item.week;
+      const tags = [];
+      if (firstSession) tags.push('Next up');
+      if (w.tag) tags.push(w.tag);
+      firstSession = false;
+      return `
+        <li class="${hidden.trim()}">
+          <div class="event-date">${formatShortDate(w.date)}</div>
+          <div>
+            <h3>${w.title}${tags.map(t => `<span class="event-tag">${t}</span>`).join('')}</h3>
+            <p>${SESSION_TIME} · ${SESSION_PLACE}</p>
+          </div>
+        </li>`;
+    }).join('');
+
+    if (items.length > UPCOMING_PREVIEW){
+      toggle.hidden = false;
+      toggle.addEventListener('click', () => {
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        list.querySelectorAll('li').forEach((li, i) => {
+          if (i >= UPCOMING_PREVIEW) li.classList.toggle('is-hidden', expanded);
+        });
+        toggle.setAttribute('aria-expanded', String(!expanded));
+        toggle.textContent = expanded ? 'Show full schedule' : 'Show fewer';
+      });
+    }
+  }
+
   renderRail();
   renderFeature(currentWeekIndex);
+  renderUpcoming();
 
-  // Scroll the current week's pill into view on load
-  const activePill = document.querySelector('.week-pill.active');
-  if (activePill) activePill.scrollIntoView({ behavior: 'instant', inline: 'center', block: 'nearest' });
+  // Scroll the curriculum row sideways so the current week's pill is centered
+  // (without jumping the whole page down to the curriculum section).
+  const rail = document.getElementById('curriculum-rail');
+  const activePill = rail.querySelector('.week-pill.active');
+  if (activePill){
+    const railBox = rail.getBoundingClientRect();
+    const pillBox = activePill.getBoundingClientRect();
+    rail.scrollLeft += (pillBox.left - railBox.left) - (railBox.width - pillBox.width) / 2;
+  }
 </script>
 
 </body>
